@@ -237,6 +237,9 @@ build_extras () {
 
 build_ncurses () {
     cd ${SOURCEDIR}
+    
+    cd ncurses-${NCURSES_VERSION}
+    
     if [ -f Makefile ] ; then
         make -j ${JFLAG} clean
     fi
