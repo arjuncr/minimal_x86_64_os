@@ -2,7 +2,7 @@
 
 rm -r sources
 
-git clone git@github.com:arjuncr/light-os.git
+git clone https://github.com/arjuncr/light-os-buildtools.git
 
 mkdir sources
 
