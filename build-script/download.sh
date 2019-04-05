@@ -1,11 +1,16 @@
 #!/bin/sh
 
-rm -r sources
+SOURCE="sources"
 
-git clone https://github.com/arjuncr/light-os-buildtools.git
+if [ -d ${SOURCE} ];
+then
+rm -r $SOURCE
+fi
 
-mkdir sources
+mkdir $SOURCE
 
-cp -r light-os/* sources/
+git clone https://github.com/arjuncr/light-os.git
+ 
+mv  light-os/* $SOURCE/
 
 rm -r light-os

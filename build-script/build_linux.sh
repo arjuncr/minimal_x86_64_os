@@ -1,13 +1,13 @@
 #!/bin/bash
 # ******************************************************************************
-# LIGHT LINUX - 2019.2
+# LIGHT LINUX - 2019.4
 # ******************************************************************************
 
 SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
 SCRIPT_VERSION="1.0"
-LINUX_NAME="LIGHT LINUX"
-DISTRIBUTION_VERSION="2019.2"
-ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
+export LINUX_NAME="LIGHT LINUX"
+export DISTRIBUTION_VERSION="2019.4"
+export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
 KERNEL_BRANCH="4.x" 
@@ -16,17 +16,17 @@ BUSYBOX_VERSION="1.30.1"
 SYSLINUX_VERSION="6.03"
 
 # EXTRAS
-NCURSES_VERSION="6.1"
+export NCURSES_VERSION="6.1"
 
+export BASEDIR=`realpath --no-symlinks $PWD`
+export SOURCEDIR=${BASEDIR}/sources
+export ROOTFSDIR=${BASEDIR}/rootfs
+export ISODIR=${BASEDIR}/iso
+export BUILD_OTHER_DIR="build_script_for_other"
 
-BASEDIR=`realpath --no-symlinks $PWD`
-SOURCEDIR=${BASEDIR}/sources
-ROOTFSDIR=${BASEDIR}/rootfs
-ISODIR=${BASEDIR}/iso
-
-CFLAGS="-march=native -O2 -pipe"
-CXXFLAGS="-march=native -O2 -pipe"
-JFLAG=4
+export CFLAGS="-march=native -O2 -pipe"
+export CXXFLAGS="-march=native -O2 -pipe"
+export JFLAG=4
 
 MENU_ITEM_SELECTED=0
 DIALOG_OUT=/tmp/dialog_$$
@@ -95,14 +95,14 @@ menu_prepare_dirs () {
 }
 
 menu_build_kernel () {
-    ask_dialog "BUILD KERNEL" "Linux Kernel ${KERNEL_VERSION} - this is the hearth of the operating system.\n\nRecipe:\n - download and extract\n - configure\n - build" \
+    ask_dialog "BUILD KERNEL" "Linux Kernel ${KERNEL_VERSION} - this is the hearth of the operating system.\n\nRecipe:\n - configure\n - build" \
     && build_kernel \
     && MENU_ITEM_SELECTED=3 \
     && show_dialog "BUILD KERNEL" "Done."
     return 0
 }
 menu_build_busybox () {
-    ask_dialog "BUILD BUSYBOX" "Build BusyBox ${BUSYBOX_VERSION} - all the basic stuff like cp, ls, etc.\n\nRecipe:\n - download and extract\n - configure\n - build" \
+    ask_dialog "BUILD BUSYBOX" "Build BusyBox ${BUSYBOX_VERSION} - all the basic stuff like cp, ls, etc.\n\nRecipe:\n - configure\n - build" \
     && build_busybox \
     && MENU_ITEM_SELECTED=4 \
     && show_dialog "BUILD BUSYBOX" "Done."
@@ -229,7 +229,9 @@ build_busybox () {
 }
 
 build_extras () {
-    build_ncurses
+   # build_ncurses
+   cd ${BASEDIR}/${BUILD_OTHER_DIR}
+   ./build_other_main.sh
 
     check_error_dialog "Building extras"
 
