@@ -23,6 +23,12 @@ export SOURCEDIR=${BASEDIR}/sources
 export ROOTFSDIR=${BASEDIR}/rootfs
 export ISODIR=${BASEDIR}/iso
 export BUILD_OTHER_DIR="build_script_for_other"
+export BOOT_SCRIPT_DIR="boot_script"
+
+ETCDIR="etc"
+export MODE="754"
+export DIRMODE="755"
+export CONFMODE="644"
 
 export CFLAGS="-march=native -O2 -pipe"
 export CXXFLAGS="-march=native -O2 -pipe"
@@ -317,6 +323,11 @@ generate_rootfs () {
     mkdir sys
     mkdir tmp && chmod 1777 tmp
 
+    mkdir -pv usr/{,local/}{bin,include,lib{,64},sbin,src}
+    mkdir -pv usr/{,local/}share/{doc,info,locale,man}
+    mkdir -pv usr/{,local/}share/{misc,terminfo,zoneinfo}      
+    mkdir -pv usr/{,local/}share/man/man{1,2,3,4,5,6,7,8}
+
     cd etc
     touch motd
     echo >> motd
@@ -328,18 +339,34 @@ generate_rootfs () {
     echo '  ------------------------------------------ ' >> motd
     echo >> motd
 
-    touch bootscript.sh
-    echo '#!/bin/sh' >> bootscript.sh
-    echo 'dmesg -n 1' >> bootscript.sh
-    echo 'mount -t devtmpfs none /dev' >> bootscript.sh
-    echo 'mount -t proc none /proc' >> bootscript.sh
-    echo 'mount -t sysfs none /sys' >> bootscript.sh
-    echo >> bootscript.sh
-    chmod +x bootscript.sh
+   # touch bootscript.sh
+   # echo '#!/bin/sh' >> bootscript.sh
+   # echo 'dmesg -n 1' >> bootscript.sh
+   # echo 'mount -t devtmpfs none /dev' >> bootscript.sh
+   # echo 'mount -t proc none /proc' >> bootscript.sh
+   # echo 'mount -t sysfs none /sys' >> bootscript.sh
+   # echo >> bootscript.sh
+   # chmod +x bootscript.sh
+    
+    mkdir rc.d/init.d/
+
+    install -d -m ${DIRMODE}  rc.d/init.d
+    install -d -m ${DIRMODE}  rc.d/start
+    install -d -m ${DIRMODE}  rc.d/stop
+
+    install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     rc.d/init.d/functions
+    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              rc.d/startup
+    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/shutdown             rc.d/shutdown
+
+    chmod +x rc.d/*
+    chmod +x rc.d/init.d/*
+
+    ln -s rc.d/init.d init.d
 
     touch inittab
-    echo '::sysinit:/etc/bootscript.sh' >> inittab
+    echo '::sysinit:/etc/rc.d/startup' >> inittab
     echo '::restart:/sbin/init' >> inittab
+    echo '::shutdown:/etc/rc.d/shutdown' >>inittab
     echo '::ctrlaltdel:/sbin/reboot' >> inittab
     echo '::once:cat /etc/motd' >> inittab
     echo '::askfirst:-/bin/login' >> inittab
