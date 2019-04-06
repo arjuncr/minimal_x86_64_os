@@ -26,6 +26,6 @@ cd ncurses-${NCURSES_VERSION}
         LDFLAGS=-L$PWD/lib \
         CPPFLAGS="-P"
 
-    make -j ${JFLAG}
-    make install -j ${JFLAG}  \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install -j ${JFLAG}  \
     DESTDIR=${ROOTFSDIR}

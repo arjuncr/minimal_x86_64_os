@@ -25,6 +25,12 @@ export ISODIR=${BASEDIR}/iso
 export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 
+export CROSS_COMPILE64=$BASEDIR/cross_gcc/x86_64-linux/bin/x86_64-linux-
+export ARCH6="x86_64"
+export CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
+export ARCHi386="i386"
+
+
 ETCDIR="etc"
 export MODE="754"
 export DIRMODE="755"
@@ -199,7 +205,7 @@ build_kernel () {
 			
     cd linux-${KERNEL_VERSION}
     make clean
-    make defconfig \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 defconfig \
         -j ${JFLAG}
     sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"${LINUX_NAME}\"/" .config
     sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
@@ -207,9 +213,9 @@ build_kernel () {
     cp ${BASEDIR}/rattie_logo_224.ppm drivers/video/logo/logo_linux_clut224.ppm
     sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
 
-    make bzImage \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         -j ${JFLAG}
-     cp arch/x86/boot/bzImage ${ISODIR}/kernel.gz
+     cp arch/$ARCH/boot/bzImage ${ISODIR}/kernel.gz
 
     check_error_dialog "linux-${KERNEL_VERSION}"
 }
@@ -219,12 +225,12 @@ build_busybox () {
 
     cd busybox-${BUSYBOX_VERSION}
     make clean
-    make defconfig
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 defconfig
     sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
-    make busybox \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 busybox \
         -j ${JFLAG}
 
-    make install \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install \
         -j ${JFLAG}
 
     rm -rf ${ROOTFSDIR} && mkdir ${ROOTFSDIR}
@@ -268,8 +274,8 @@ build_ncurses () {
         LDFLAGS=-L$PWD/lib \
         CPPFLAGS="-P"
 
-    make -j ${JFLAG}
-    make install -j ${JFLAG}  \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install -j ${JFLAG}  \
         DESTDIR=${ROOTFSDIR}
     check_error_dialog "ncurses-${NCURSES_VERSION}"
 }
@@ -285,8 +291,8 @@ build_nano () {
         --prefix=/usr \
         LDFLAGS=-L$PWD/lib
 
-    make -j ${JFLAG}
-    make install -j ${JFLAG} \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install -j ${JFLAG} \
         DESTDIR=${ROOTFSDIR}
 
     check_error_dialog "nano-${NANO_VERSION}"
@@ -303,8 +309,8 @@ build_vim () {
         --prefix=/usr \
         LDFLAGS=-L$PWD/lib
 
-    make -j ${JFLAG}
-    make install \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install \
         -j ${JFLAG} \
         DESTDIR=${ROOTFSDIR}
 
@@ -312,7 +318,7 @@ build_vim () {
 }
 
 
-generate_rootfs () {
+generate_rootfs () {	
     cd ${ROOTFSDIR}
     rm -f linuxrc
 
@@ -418,7 +424,7 @@ generate_iso () {
     echo 'UI menu.c32 ' >> isolinux.cfg
     echo 'PROMPT 0 ' >> isolinux.cfg
     echo >> isolinux.cfg
-    echo 'MENU TITLE LIGHT LINUX 2019.2 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
+    echo 'MENU TITLE LIGHT LINUX 2019.4 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
     echo 'TIMEOUT 60 ' >> isolinux.cfg
     echo 'DEFAULT light linux ' >> isolinux.cfg
     echo >> isolinux.cfg
