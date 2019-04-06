@@ -60,7 +60,7 @@ mount -o remount,rw /
 check_status
 
 echo -n "Setting hostname: "
-hostname -F /etc/HOSTNAME
+echo "lightlinux">/etc/hostname
 check_status
 
 echo -n "Cleaning up system: "
@@ -76,6 +76,13 @@ check_status
 
 echo -n "Setting up interface lo: "
 ifconfig lo up 127.0.0.1
+
+echo -n "setting eth0 ip"
+ifconfig eth0 up
+
+echo -n "setting eth1 ip"
+ifconfig eth0 up
+
 check_status
 
 echo "Running start scripts."
@@ -88,4 +95,3 @@ do
 done
 
 exit 0
-

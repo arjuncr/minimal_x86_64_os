@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+[ -x /usr/sbin/chronyd ] || exit 0
+
+if [ -e /run/chronyd.pid ] && ! ip r 2> /dev/null | grep -q '^default'; then
+    chronyc offline > /dev/null 2>&1
+fi
+
+exit 0

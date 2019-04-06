@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+[ -x /usr/sbin/chronyd ] || exit 0
+
+if [ -e /run/chronyd.pid ] &&
+    ip r list dev $IFACE 2> /dev/null | grep -q '^default'; then
+    chronyc online > /dev/null 2>&1
+fi
+
+exit 0
