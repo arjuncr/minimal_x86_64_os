@@ -379,20 +379,13 @@ generate_rootfs () {
     fi	
 
     touch fstab
-    echo 'Begin                                                              '>>/etc/fstab
-    echo '                                                                   '>>fstab
-    echo '# file system  mount-point  type     options             dump fsck '>>fstab
-    echo '#                                                             order '>>fstab
-    echo '                                                                   '>>fstab
-    echo '/dev/<xxx>     /            <fff>    defaults            1     1   '>>fstab
-    echo '/dev/<yyy>     swap         swap     pri=1               0     0   '>>fstab
-    echo 'proc           /proc        proc     nosuid,noexec,nodev 0     0   '>>fstab
-    echo 'sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0   '>>fstab
-    echo 'devpts         /dev/pts     devpts   gid=5,mode=620      0     0   '>>fstab
-    echo 'tmpfs          /run         tmpfs    defaults            0     0   '>>fstab
-    echo 'devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0   '>>fstab
-    echo '                                                                   '>>fstab
-    echo '# End /etc/fstab                                                   '>>fstab		
+    echo '# file system  mount-point  type   options          dump   fsck'  >>fstab
+    echo '#                                                          order' >>fstab
+    echo 'rootfs          /               auto    defaults        1      1' >>fstab
+    echo 'proc            /proc           proc    defaults        0      0' >>fstab
+    echo 'sysfs           /sys            sysfs   defaults        0      0' >>fstab
+    echo 'devpts          /dev/pts        devpts  gid=4,mode=620  0      0' >>fstab
+    echo 'tmpfs           /dev/shm        tmpfs   defaults        0      0' >>fstab
 
     # touch bootscript.sh
     # echo '#!/bin/sh' >> bootscript.sh
@@ -436,12 +429,9 @@ generate_rootfs () {
     echo '::ctrlaltdel:/sbin/reboot' >> inittab
     echo '::once:cat /etc/motd' >> inittab
     echo '::askfirst:-/bin/login' >> inittab
-    echo 'tty2::once:cat /etc/motd' >> inittab
-    echo 'tty2::askfirst:-/bin/sh' >> inittab
-    echo 'tty3::once:cat /etc/motd' >> inittab
-    echo 'tty3::askfirst:-/bin/sh' >> inittab
-    echo 'tty4::once:cat /etc/motd' >> inittab
-    echo 'tty4::askfirst:-/bin/sh' >> inittab
+    echo 'tty2::respawn:/sbin/getty 38400 tty2' >> inittab
+    echo 'tty3::respawn:/sbin/getty 38400 tty3' >> inittab
+    echo 'tty4::respawn:/sbin/getty 38400 tty4' >> inittab
     echo >> inittab
 
     if [ -f group ]
@@ -451,6 +441,17 @@ generate_rootfs () {
 
     touch group
     echo 'root:x:0:root' >> group
+    echo 'root:x:0:'     >>group
+    echo 'bin:x:1:'      >>group
+    echo 'sys:x:2:'      >>group
+    echo 'kmem:x:3:'     >>group
+    echo 'tty:x:4:'      >>group
+    echo 'daemon:x:6:'   >>group
+    echo 'disk:x:8:'     >>group
+    echo 'dialout:x:10:' >>group
+    echo 'video:x:12:'   >>group
+    echo 'utmp:x:13:'    >>group
+    echo 'usb:x:14:'     >>group
     echo >> group
 	
     if [ -f passwd ]
