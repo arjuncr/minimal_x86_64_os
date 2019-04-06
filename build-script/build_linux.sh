@@ -36,8 +36,8 @@ export MODE="754"
 export DIRMODE="755"
 export CONFMODE="644"
 
-export CFLAGS="-march=native -O2 -pipe"
-export CXXFLAGS="-march=native -O2 -pipe"
+export CFLAGS=-m64
+export CXXFLAGS=-m64
 export JFLAG=4
 
 MENU_ITEM_SELECTED=0
@@ -205,13 +205,15 @@ build_kernel () {
 			
     cd linux-${KERNEL_VERSION}
     make clean
-    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 defconfig \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 x86_64_defconfig \
         -j ${JFLAG}
     sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"${LINUX_NAME}\"/" .config
     sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
     sed -i "s/.*LOGO_LINUX_CLUT224.*/LOGO_LINUX_CLUT224=y/" .config
     cp ${BASEDIR}/rattie_logo_224.ppm drivers/video/logo/logo_linux_clut224.ppm
     sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
+	
+    make modules_install CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
 
     make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         -j ${JFLAG}
@@ -225,9 +227,9 @@ build_busybox () {
 
     cd busybox-${BUSYBOX_VERSION}
     make clean
-    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 defconfig
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64  x86_64_defconfig
     sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
-    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 busybox \
+    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64  busybox \
         -j ${JFLAG}
 
     make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 install \
