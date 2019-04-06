@@ -363,6 +363,7 @@ generate_rootfs () {
     install -d -m ${DIRMODE}  rc.d/stop
 
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     rc.d/init.d/functions
+    install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/network	   rc.d/init.d/network
     install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              rc.d/startup
     install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/shutdown             rc.d/shutdown
 
