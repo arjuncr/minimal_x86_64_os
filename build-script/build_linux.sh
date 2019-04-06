@@ -26,12 +26,12 @@ export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 
 export CROSS_COMPILE64=$BASEDIR/cross_gcc/x86_64-linux/bin/x86_64-linux-
-export ARCH6="x86_64"
+export ARCH64="x86_64"
 export CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
 export ARCHi386="i386"
 
 
-ETCDIR="etc"
+export ETCDIR="etc"
 export MODE="754"
 export DIRMODE="755"
 export CONFMODE="644"
@@ -215,7 +215,7 @@ build_kernel () {
 
     make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         -j ${JFLAG}
-     cp arch/$ARCH/boot/bzImage ${ISODIR}/kernel.gz
+     cp arch/$ARCH64/boot/bzImage ${ISODIR}/kernel.gz
 
     check_error_dialog "linux-${KERNEL_VERSION}"
 }
