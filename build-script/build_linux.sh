@@ -3,17 +3,17 @@
 # LIGHT LINUX - 2019.4
 # ******************************************************************************
 
-SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
-SCRIPT_VERSION="1.0"
+export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
+export SCRIPT_VERSION="1.0"
 export LINUX_NAME="LIGHT LINUX"
 export DISTRIBUTION_VERSION="2019.4"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
-KERNEL_BRANCH="4.x" 
-KERNEL_VERSION="4.18.5"
-BUSYBOX_VERSION="1.30.1"
-SYSLINUX_VERSION="6.03"
+export KERNEL_BRANCH="4.x" 
+export KERNEL_VERSION="4.18.5"
+export BUSYBOX_VERSION="1.30.1"
+export SYSLINUX_VERSION="6.03"
 
 # EXTRAS
 export NCURSES_VERSION="6.1"
@@ -28,20 +28,23 @@ export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 export NET_SCRIPT="network"
 
+#cross compile
 export CROSS_COMPILE64=$BASEDIR/cross_gcc/x86_64-linux/bin/x86_64-linux-
 export ARCH64="x86_64"
 export CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
 export ARCHi386="i386"
 
-
+#Dir and mode
 export ETCDIR="etc"
 export MODE="754"
 export DIRMODE="755"
 export CONFMODE="644"
 
+#cflags
 export CFLAGS=-m64
 export CXXFLAGS=-m64
 
+#setting JFLAG
 if [ $1 -ne 0 ]
 then	
 	export JFLAG=$1
@@ -102,7 +105,7 @@ check_error_dialog () {
 # ******************************************************************************
 
 menu_introduction () {
-    show_dialog "INTRODUCTION" "${LINUX_NAME} is an light linux based os" \
+    show_dialog "INTRODUCTION" "${LINUX_NAME} is an minimal linux based os" \
     && MENU_ITEM_SELECTED=1
     return 0
 }
@@ -248,12 +251,11 @@ build_busybox () {
 }
 
 build_extras () {
-   # build_ncurses
+   # build_extra
    cd ${BASEDIR}/${BUILD_OTHER_DIR}
    ./build_other_main.sh
 
     check_error_dialog "Building extras"
-
 }
 
 build_ncurses () {
@@ -327,7 +329,7 @@ build_vim () {
 
 generate_rootfs () {	
     cd ${ROOTFSDIR}
-    #rm -f linuxrc
+    rm -f linuxrc
 
     mkdir dev
     mkdir etc
@@ -337,7 +339,6 @@ generate_rootfs () {
     mkdir var
     mkdir var/log
     mkdir srv
-    mkdir run
     mkdir lib
     mkdir root
     mkdir boot
@@ -360,7 +361,7 @@ generate_rootfs () {
 
     touch motd
     echo >> motd
-    echo ' ------------------------------------ 2019.2 ' >> motd
+    echo ' ------------------------------------ 2019.4 ' >> motd
     echo '                   "..^__                    ' >> motd
     echo '                   *,,-,_).-~                ' >> motd
     echo '                 LIGHT LINUX                 ' >> motd
@@ -396,15 +397,6 @@ generate_rootfs () {
     echo 'devpts          /dev/pts        devpts  gid=4,mode=620  0      0' >>fstab
     echo 'tmpfs           /dev/shm        tmpfs   defaults        0      0' >>fstab
 
-    # touch bootscript.sh
-    # echo '#!/bin/sh' >> bootscript.sh
-    # echo 'dmesg -n 1' >> bootscript.sh
-    # echo 'mount -t devtmpfs none /dev' >> bootscript.sh
-    # echo 'mount -t proc none /proc' >> bootscript.sh
-    # echo 'mount -t sysfs none /sys' >> bootscript.sh
-    # echo >> bootscript.sh
-    # chmod +x bootscript.sh
-
     rm -r init.d/*
 
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     init.d/functions
@@ -424,7 +416,7 @@ generate_rootfs () {
     ln -s init.d/network   rcS.d/S01network
 
     #Network configuration
-    cp -r ${BASEDIR}/${NET_SCRIPT}                                                 ./
+    cp -r ${BASEDIR}/${NET_SCRIPT}                      
 	
     if [ -f inittab ]
     then
@@ -602,4 +594,3 @@ set -ex
 # ******************************************************************************
 # EOF
 # ******************************************************************************
-
