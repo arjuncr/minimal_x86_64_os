@@ -2,7 +2,7 @@
 
 # System Startup Script
 # 
-. /etc/rc.d/init.d/functions
+. /etc/init.d/functions
 
 /bin/mount -t proc none /proc
 /bin/mount -t sysfs none /sys
@@ -87,11 +87,18 @@ check_status
 
 echo "Running start scripts."
 
-for i in /etc/rc.d/start/*
-do
-	if [ -x $i ]; then
-		$i start
-	fi
-done
+runlevel=S
+prevlevel=N
+umask 022
+export runlevel prevlevel 
+trap ":" INT QUIT TSTP
+
+
+  for i in /etc/rcS.d/S??*
+  do
+     [ ! -f  "$i" ] && continue;
+     $i start       
+  done
+
 
 exit 0

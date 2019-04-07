@@ -17,6 +17,8 @@ SYSLINUX_VERSION="6.03"
 
 # EXTRAS
 export NCURSES_VERSION="6.1"
+export NANO_VERSION="4.0"
+export VIM_DIR="81"
 
 export BASEDIR=`realpath --no-symlinks $PWD`
 export SOURCEDIR=${BASEDIR}/sources
@@ -39,7 +41,13 @@ export CONFMODE="644"
 
 export CFLAGS=-m64
 export CXXFLAGS=-m64
-export JFLAG=4
+
+if [ $1 -ne 0 ]
+then	
+	export JFLAG=$1
+else
+	export JFLAG=4
+fi
 
 MENU_ITEM_SELECTED=0
 DIALOG_OUT=/tmp/dialog_$$
@@ -341,6 +349,7 @@ generate_rootfs () {
     mkdir -pv usr/{,local/}share/man/man{1,2,3,4,5,6,7,8}
     mkdir -pv etc/rc{0,1,2,3,4,5,6,S}.d
     mkdir -pv etc/init.d
+    mkdir -pv etc/sys_init
 
     cd etc
 
@@ -400,7 +409,7 @@ generate_rootfs () {
 
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     init.d/functions
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/network	   init.d/network
-    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              init.d/startup
+    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              sys_init/startup
     install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/shutdown             init.d/shutdown
 
     chmod +x init.d/*
@@ -423,15 +432,24 @@ generate_rootfs () {
     fi
 
     touch inittab
-    echo '::sysinit:/etc/init.d/startup' >> inittab
-    echo '::restart:/sbin/init' >> inittab
-    echo '::shutdown:/etc/init.d/shutdown' >>inittab
-    echo '::ctrlaltdel:/sbin/reboot' >> inittab
-    echo '::once:cat /etc/motd' >> inittab
-    echo '::askfirst:-/bin/login' >> inittab
-    echo 'tty2::respawn:/sbin/getty 38400 tty2' >> inittab
-    echo 'tty3::respawn:/sbin/getty 38400 tty3' >> inittab
-    echo 'tty4::respawn:/sbin/getty 38400 tty4' >> inittab
+    #echo 'id:2:initdefault:                   '>>inittab
+    echo '::sysinit:/etc/sys_init/startup     '>> inittab
+    echo 'l0:0:wait:/etc/rc0.d 0              '>> inittab
+    echo 'l1:1:wait:/etc/rc1.d 1              '>> inittab
+    echo 'l2:2:wait:/etc/rc2.d 2              '>> inittab
+    echo 'l3:3:wait:/etc/rc3.d 3              '>> inittab
+    echo 'l4:4:wait:/etc/rc4.d 4              '>> inittab
+    echo 'l5:5:wait:/etc/rc5.d 5              '>> inittab
+    echo 'l6:6:wait:/etc/rc6.d 6              '>> inittab
+    echo '::restart:/sbin/init                '>> inittab
+    echo '::shutdown:/etc/init.d/shutdown     '>> inittab
+    echo '::ctrlaltdel:/sbin/reboot           '>> inittab
+    echo '::once:cat /etc/motd                '>> inittab
+    echo '::askfirst:-/bin/login              '>> inittab
+    #echo 'tty1::respawn:/sbin/getty 38400 tty1'>> inittab
+    echo 'tty2::respawn:/sbin/getty 38400 tty2'>> inittab
+    echo 'tty3::respawn:/sbin/getty 38400 tty3'>> inittab
+    echo 'tty4::respawn:/sbin/getty 38400 tty4'>> inittab
     echo >> inittab
 
     if [ -f group ]
@@ -453,6 +471,17 @@ generate_rootfs () {
     echo 'utmp:x:13:'    >>group
     echo 'usb:x:14:'     >>group
     echo >> group
+
+
+    if [ -f netwok.conf ]
+    then 
+	rm network.conf
+    fi	
+
+    touch network.conf
+
+    echo 'NETWORKING=yes' >network.conf
+
 	
     if [ -f passwd ]
     then
@@ -551,7 +580,7 @@ test_qemu () {
     cd ${BASEDIR}
     if [ -f ${ISO_FILENAME} ];
     then
-        qemu-system-x86_64 -m 128M -cdrom ${ISO_FILENAME} -boot d -vga std
+       qemu-system-x86_64 -m 128M -cdrom ${ISO_FILENAME} -boot d -vga std
     fi
     check_error_dialog "${ISO_FILENAME}"
 }
