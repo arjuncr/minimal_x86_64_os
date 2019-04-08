@@ -1,0 +1,3 @@
+
+INTERFACE=eth1
+DHCP=yes
