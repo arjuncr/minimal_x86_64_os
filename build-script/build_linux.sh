@@ -416,7 +416,8 @@ generate_rootfs () {
     ln -s init.d/network   rcS.d/S01network
 
     #Network configuration
-    cp -r ${BASEDIR}/${NET_SCRIPT}                      
+    cp -r ${BASEDIR}/${NET_SCRIPT}  ./
+    cp -r ${BASEDIR}/wpa_supplicant  ./
 	
     if [ -f inittab ]
     then
