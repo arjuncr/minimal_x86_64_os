@@ -3,7 +3,7 @@
 # Network interface(s) init script
 #
 # config: /etc/network.conf
-#	  /etc/network.d/interface.[devname]
+#	  /etc/network/interfaces.d/interface.[devname]
 
 . /etc/init.d/functions
 . /etc/network.conf
@@ -15,7 +15,7 @@ fi
 
 case "$1" in
 start)
-	for i in /etc/network.d/interface.*
+	for i in /etc/network/interface.d/interface.*
 	do
 		if [ -r "$i" ]; then
 			. $i
@@ -53,7 +53,7 @@ stop)
 		check_status
 	fi
 
-	for i in /etc/network.d/interface.*
+	for i in /etc/network/interface.d/interface.*
 	do
 		if [ -r "$i" ]; then
 			. $i
