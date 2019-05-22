@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo just for testing
+echo "just for testing"
