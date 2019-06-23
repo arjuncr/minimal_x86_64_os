@@ -1,3 +1,3 @@
 [submodule "build-script/light-os"]
 	path = build-script/light-os
-	url = git@github.com:arjuncr/light-os.git
+	url = https://github.com/arjuncr/light-os.git
