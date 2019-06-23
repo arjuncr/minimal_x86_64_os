@@ -40,6 +40,11 @@ export MODE="754"
 export DIRMODE="755"
 export CONFMODE="644"
 
+#configs
+
+LIGHT_OS_KCONFIG="$BASEDIR/configs/kernel/light_os_kconfig"
+LIGHT_OS_BUSYBOX_CONFIG="$BASEDIR/configs/busybox/light_os_busybox_config"
+
 #cflags
 export CFLAGS=-m64
 export CXXFLAGS=-m64
@@ -217,11 +222,12 @@ build_kernel () {
 			
     cd linux-${KERNEL_VERSION}
     make clean
-    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 x86_64_defconfig \
-        -j ${JFLAG}
-    sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"${LINUX_NAME}\"/" .config
-	
-    make modules_install CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+
+    cp $LIGHT_OS_KCONFIG .config
+    
+    #make module ROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
+
+    #make modules_install CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 -j ${JFLAG}
 
     make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         -j ${JFLAG}
@@ -235,8 +241,9 @@ build_busybox () {
 
     cd busybox-${BUSYBOX_VERSION}
     make clean
-    make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64  x86_64_defconfig
-    sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
+
+    cp $LIGHT_OS_BUSYBOX_CONFIG .config 
+
     make CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64  busybox \
         -j ${JFLAG}
 
