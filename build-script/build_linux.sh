@@ -1,12 +1,12 @@
 #!/bin/bash
 # ******************************************************************************
-# LIGHT LINUX - 2019.4
+# LIGHT LINUX - 2019.6
 # ******************************************************************************
 
 export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.0"
+export SCRIPT_VERSION="1.1"
 export LINUX_NAME="LIGHT LINUX"
-export DISTRIBUTION_VERSION="2019.4"
+export DISTRIBUTION_VERSION="2019.6"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
