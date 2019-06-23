@@ -21,7 +21,7 @@ export NANO_VERSION="4.0"
 export VIM_DIR="81"
 
 export BASEDIR=`realpath --no-symlinks $PWD`
-export SOURCEDIR=${BASEDIR}/sources
+export SOURCEDIR=${BASEDIR}/light-os
 export ROOTFSDIR=${BASEDIR}/rootfs
 export ISODIR=${BASEDIR}/iso
 export BUILD_OTHER_DIR="build_script_for_other"
