@@ -1,0 +1,19 @@
+#id:2:initdefault:                   
+::sysinit:/etc/sys_init/startup     
+l0:0:wait:/etc/rc0.d 0              
+l1:1:wait:/etc/rc1.d 1             
+l2:2:wait:/etc/rc2.d 2              
+l3:3:wait:/etc/rc3.d 3              
+l4:4:wait:/etc/rc4.d 4              
+l5:5:wait:/etc/rc5.d 5              
+l6:6:wait:/etc/rc6.d 6              
+::restart:/sbin/init                
+::shutdown:/etc/init.d/shutdown     
+::ctrlaltdel:/sbin/reboot           
+::once:cat /etc/motd                
+::askfirst:-/bin/login              
+#tty1::respawn:/sbin/getty 38400 tty1
+tty2::respawn:/sbin/getty 38400 tty2
+tty3::respawn:/sbin/getty 38400 tty3
+tty4::respawn:/sbin/getty 38400 tty4
+
