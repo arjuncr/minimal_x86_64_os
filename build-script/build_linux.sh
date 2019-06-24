@@ -298,7 +298,7 @@ generate_rootfs () {
     echo ' ----------------------$DISTRIBUTION_VERSION ' >> motd
     echo '                   "..^__                    ' >> motd
     echo '                   *,,-,_).-~                ' >> motd
-    echo '                 LIGHT LINUX x86_64          ' >> motd
+    echo '               LIGHT LINUX x86_64            ' >> motd
     echo '                                             ' >> motd
     echo '  ------------------------------------------ ' >> motd
     echo >> motd
