@@ -1,4 +1,4 @@
-use build_linux.sh for building os (x86_64)
+use build_x86_64.sh for building os (x86_64)
 
 For cloning the repo.
 
