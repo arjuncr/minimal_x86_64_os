@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 int_build_env()
 {
@@ -68,13 +68,9 @@ prepare_dirs () {
     then
         mkdir ${ROOTFSDIR}
     fi
-    if [ ! -d ${IMGDIR} ];
+    if [ ! -d ${ISODIR} ];
     then
-        mkdir    ${IMGDIR}
-	mkdir -p ${IMGDIR}/bootloader
-	mkdir -p ${IMGDIR}/boot
-	mkdir -p ${IMGDIR}/boot/overlay
-	mkdir -p ${IMGDIR}/kernel
+        mkdir    ${ISODIR}
     fi
 }
 
