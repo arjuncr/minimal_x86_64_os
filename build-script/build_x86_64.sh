@@ -151,7 +151,6 @@ generate_rootfs () {
     mkdir -pv usr/{,local/}share/man/man{1,2,3,4,5,6,7,8}
     mkdir -pv etc/rc{0,1,2,3,4,5,6,S}.d
     mkdir -pv etc/init.d
-    mkdir -pv etc/sys_init
 
     cd etc
     
@@ -167,7 +166,7 @@ generate_rootfs () {
 
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     init.d/functions
     install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/network	   init.d/network
-    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              sys_init/startup
+    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              rcS.d/S01startup
     install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/shutdown             init.d/shutdown
 
     chmod +x init.d/*
