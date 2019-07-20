@@ -87,17 +87,17 @@ check_status
 
 echo "Running start scripts."
 
-runlevel=S
-prevlevel=N
-umask 022
-export runlevel prevlevel 
-trap ":" INT QUIT TSTP
+#runlevel=S
+#prevlevel=N
+#umask 022
+#export runlevel prevlevel 
+#trap ":" INT QUIT TSTP
 
 
-  for i in /etc/rcS.d/S??*
-  do
-     [ ! -f  "$i" ] && continue;
-     $i start       
-  done
+#  for i in /etc/rcS.d/S??*
+#  do
+#     [ ! -f  "$i" ] && continue;
+#     $i start       
+#  done
 
 exit 0
