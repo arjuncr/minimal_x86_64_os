@@ -85,7 +85,7 @@ ifup eth1
 
 check_status
 
-echo "Running start scripts."
+#echo "Running start scripts."
 
 #runlevel=S
 #prevlevel=N
