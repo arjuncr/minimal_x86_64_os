@@ -3,7 +3,7 @@
 int_build_env()
 {
 export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.0"
+export SCRIPT_VERSION="1.1"
 export LINUX_NAME="LIGHT LINUX"
 export DISTRIBUTION_VERSION="2019.7"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
@@ -23,6 +23,7 @@ export BASEDIR=`realpath --no-symlinks $PWD`
 export SOURCEDIR=${BASEDIR}/light-os
 export ROOTFSDIR=${BASEDIR}/rootfs
 export ISODIR=${BASEDIR}/iso
+export TARGETDIR=${BASEDIR}/debian-target/rootfs_x86_64
 export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 export NET_SCRIPT="network"
@@ -154,13 +155,13 @@ generate_rootfs () {
 
     cd etc
     
-    cp $CONFIG_ETC_DIR/motd .
+    cp $TARGETDIR/etc//motd .
 
-    cp $CONFIG_ETC_DIR/hosts .
+    cp $TARGETDIR/etc/hosts .
   
-    cp $CONFIG_ETC_DIR/resolv.conf .
+    cp $TARGETDIR/etc/resolv.conf .
 
-    cp $CONFIG_ETC_DIR/fstab .
+    cp $TARGETDIR/etc/fstab .
 
     rm -r init.d/*
 
@@ -180,18 +181,14 @@ generate_rootfs () {
     ln -s init.d/network   rc6.d/K01network
     ln -s init.d/network   rcS.d/S01network
 	
-    cp $CONFIG_ETC_DIR/inittab .
+    cp $TARGETDIR/etc/inittab .
 
-    cp $CONFIG_ETC_DIR/group .
+    cp $TARGETDIR/etc/group .
 
-    cp $CONFIG_ETC_DIR/passwd .
+    cp $TARGETDIR/etc/passwd .
 
     cd ${ROOTFSDIR}
-    
-    cp $CONFIG_ETC_DIR/init .
-
-    chmod +x init
-
+   
     #creating initial device node
     mknod -m 622 dev/console c 5 1
     mknod -m 666 dev/null c 1 3
@@ -257,7 +254,6 @@ generate_image () {
         -boot-load-size 4 \
         -boot-info-table \
         ./
-
 }
 
 test_qemu () {
@@ -272,44 +268,43 @@ clean_files () {
    rm -rf ${SOURCEDIR}
    rm -rf ${ROOTFSDIR}
    rm -rf ${ISODIR}
-    
 }
 
 init_work_dir()
 {
-prepare_dirs
+	prepare_dirs
 }
 
 clean_work_dir()
 {
-clean_files
+	clean_files
 }
 
 build_all()
 {
-build_kernel  -b
-build_busybox -b
-build_extras   -b
+	build_kernel  -b
+	build_busybox -b
+	build_extras   -b
 }
 
 rebuild_all()
 {
-clean_all
-build_all
+	clean_all
+	build_all
 }
 
 clean_all()
 {
-build_kernel  -c
-build_busybox -c
-build_extras   -c
+	build_kernel  -c
+	build_busybox -c
+	build_extras   -c
 }
 
 wipe_rebuild()
 {
-clean_work_dir
-init_work_dir
-rebuild_all
+	clean_work_dir
+	init_work_dir
+	rebuild_all
 }
 
 help_msg()
@@ -456,4 +451,3 @@ option $1
 
 #starting of script
 main $1 
-
