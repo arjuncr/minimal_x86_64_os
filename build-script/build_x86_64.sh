@@ -5,7 +5,7 @@ int_build_env()
 export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.0"
 export LINUX_NAME="LIGHT LINUX"
-export DISTRIBUTION_VERSION="2019.6"
+export DISTRIBUTION_VERSION="2019.7"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
@@ -316,7 +316,7 @@ help_msg()
 {
 echo -e "#################################################################################\n"
 
-echo -e "############################Utility to Build X86_64 OS###########################\n"
+echo -e "############################Utility to Build x86_64 OS###########################\n"
 
 echo -e "#################################################################################\n"
 
