@@ -1,3 +1,6 @@
 [submodule "build-script/light-os"]
 	path = build-script/light-os
 	url = https://github.com/arjuncr/light-os.git
+[submodule "build-script/debian-target"]
+	path = build-script/debian-target
+	url = https://github.com/arjuncr/debian-target.git
