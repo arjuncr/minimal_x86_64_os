@@ -9,8 +9,8 @@ export DISTRIBUTION_VERSION="2019.7"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
-export KERNEL_BRANCH="4.x" 
-export KERNEL_VERSION="4.18.5"
+export KERNEL_BRANCH="5.x" 
+export KERNEL_VERSION="5.2.1"
 export BUSYBOX_VERSION="1.30.1"
 export SYSLINUX_VERSION="6.03"
 
