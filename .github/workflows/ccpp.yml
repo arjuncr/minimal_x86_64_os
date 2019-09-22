@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: CI
 
 on: [push]
 
@@ -6,6 +6,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
-      run: echo "test"
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Building x86_64 os
+    - name: Running a multi-line script
+      run: |
+        git clone https://github.com/arjuncr/minimal_x86_64_os.git
+        cd minimal_x86_64_os/build-script
+        ./build_x86_64.sh --build-all
