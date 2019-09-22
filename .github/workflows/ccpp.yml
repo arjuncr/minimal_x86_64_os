@@ -8,15 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
-      run: git clone https://github.com/arjuncr/minimal_x86_64_os.git
-      run: cd minimal_x86_64_os/build-script
-      run: ./minimal_x86_64_os --build-all
+      run: 
+        git clone https://github.com/arjuncr/minimal_x86_64_os.git
+        cd minimal_x86_64_os/build-script
+        ./minimal_x86_64_os --build-all
