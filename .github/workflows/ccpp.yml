@@ -8,7 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      run: 
-        git clone https://github.com/arjuncr/minimal_x86_64_os.git
-        cd minimal_x86_64_os/build-script
-        ./minimal_x86_64_os --build-all
+      run: echo "test"
