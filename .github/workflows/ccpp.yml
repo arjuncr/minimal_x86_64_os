@@ -18,5 +18,5 @@ jobs:
     - name: make distcheck
       run: make distcheck
       run: git clone https://github.com/arjuncr/minimal_x86_64_os.git
-      cd minimal_x86_64_os/build-script
-      ./minimal_x86_64_os --build-all
+      run: cd minimal_x86_64_os/build-script
+      run: ./minimal_x86_64_os --build-all
