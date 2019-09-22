@@ -86,7 +86,7 @@ build_kernel () {
     elif [ "$1" == "-b" ]
     then	    
     	 #cp $LIGHT_OS_KCONFIG .config
-    	 make mrproper defconfig CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
+    	 make defconfig CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         	-j ${JFLAG}
         cp arch/$ARCH64/boot/bzImage ${ISODIR}/kernel.gz
     fi   
