@@ -2,7 +2,6 @@
 
 # System Startup Script
 # 
-. /etc/init.d/functions
 
 /bin/mount -t proc none /proc
 /bin/mount -t sysfs none /sys
@@ -14,11 +13,8 @@
 for x in cache lib lib/misc lib/locate local lock log mail opt run spool; do mkdir /var/$x; done
 ln -s ../tmp /var/tmp
 
-/bin/echo "/sbin/mdev" > /proc/sys/kernel/hotplug
-
 echo -n "Starting mdev: "
 /sbin/mdev -s
-check_status
 
 echo -n "Mounting devpts: "
 mount /dev/pts
@@ -27,7 +23,6 @@ check_status
 if [ -x /sbin/hwclock ] && [ -e /dev/rtc ]; then
 	echo -n "Setting system clock: "
 	hwclock --hctosys --utc
-	check_status
 fi
 
 if [ -x /sbin/fsck ]; then
@@ -44,7 +39,6 @@ if [ -x /sbin/fsck ]; then
 		reboot
 	else
 		echo -n "Checking local filesystems: "
-		check_status
 	fi
 fi
 
@@ -52,16 +46,13 @@ fi
 if [ -x /sbin/swapon ]; then
 	echo -n "Enabling swap space: "
 	swapon -a
-	check_status
 fi
 
 echo -n "Remounting root rw: "
 mount -o remount,rw /
-check_status
 
 echo -n "Setting hostname: "
 echo "lightlinux">/etc/hostname
-check_status
 
 echo -n "Cleaning up system: "
 > /var/run/utmp
@@ -72,18 +63,12 @@ chmod 0664 /var/log/wtmp
 chmod 0660 /var/log/messages
 rm -rf /tmp/*
 rm -f /var/run/*.pid
-check_status
 
 echo -n "Setting up interface lo: "
 ifconfig lo up 127.0.0.1
 
 echo -n "setting eth0 ip"
 ifup eth0
-
-echo -n "setting eth1 ip"
-ifup eth1
-
-check_status
 
 #echo "Running start scripts."
 
