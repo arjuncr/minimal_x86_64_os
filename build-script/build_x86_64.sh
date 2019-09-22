@@ -155,7 +155,7 @@ generate_rootfs () {
 
     cd etc
     
-    cp $TARGETDIR/etc//motd .
+    cp $TARGETDIR/etc/motd .
 
     cp $TARGETDIR/etc/hosts .
   
