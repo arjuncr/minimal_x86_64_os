@@ -24,6 +24,7 @@ export SOURCEDIR=${BASEDIR}/light-os
 export ROOTFSDIR=${BASEDIR}/rootfs
 export ISODIR=${BASEDIR}/iso
 export TARGETDIR=${BASEDIR}/debian-target/rootfs_x86_64
+export BASE_ROOTFS=${BASEDIR}/base-rootfs
 export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 export NET_SCRIPT="network"
@@ -155,40 +156,33 @@ generate_rootfs () {
 
     cd etc
     
-    cp $TARGETDIR/etc/motd .
+    cp $BASE_ROOTFS/etc/motd .
 
-    cp $TARGETDIR/etc/hosts .
+    cp $BASE_ROOTFS/etc/hosts .
   
-    cp $TARGETDIR/etc/resolv.conf .
+    cp $BASE_ROOTFS/etc/fstab .
 
-    cp $TARGETDIR/etc/fstab .
+    cp $BASE_ROOTFS/etc/mdev.conf .
+
+    cp $BASE_ROOTFS/etc/profile .
 
     rm -r init.d/*
 
-    install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/functions     init.d/functions
-    install -m ${CONFMODE} ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/init.d/network	   init.d/network
-    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              rcS.d/S01startup
+    install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/startup              rcS.d/startup
     install -m ${MODE}     ${BASEDIR}/${BOOT_SCRIPT_DIR}/rc.d/shutdown             init.d/shutdown
 
     chmod +x init.d/*
-
-    ln -s init.d/network   rc0.d/K01network
-    ln -s init.d/network   rc1.d/K01network
-    ln -s init.d/network   rc2.d/S01network
-    ln -s init.d/network   rc3.d/S01network
-    ln -s init.d/network   rc4.d/S01network
-    ln -s init.d/network   rc5.d/S01network
-    ln -s init.d/network   rc6.d/K01network
-    ln -s init.d/network   rcS.d/S01network
 	
-    cp $TARGETDIR/etc/inittab .
+    cp $BASE_ROOTFS/etc/inittab .
 
-    cp $TARGETDIR/etc/group .
+    cp $BASE_ROOTFS/etc/group .
 
-    cp $TARGETDIR/etc/passwd .
+    cp $BASE_ROOTFS/etc/passwd .
 
     cd ${ROOTFSDIR}
    
+    cp $BASE_ROOTFS/init .
+
     #creating initial device node
     mknod -m 622 dev/console c 5 1
     mknod -m 666 dev/null c 1 3
@@ -204,6 +198,7 @@ generate_rootfs () {
     mknod -m 666 dev/ram b 1 1
     mknod -m 666 dev/mem c 1 1
     mknod -m 666 dev/kmem c 1 2
+
     chown root:tty dev/{console,ptmx,tty,tty1,tty2,tty3,tty4}
 
     # sudo chown -R root:root .
