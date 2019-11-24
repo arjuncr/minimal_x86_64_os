@@ -6,11 +6,11 @@
 
 int_build_env()
 {
-export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
+export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.2"
-export LINUX_NAME="LIGHT LINUX"
+export LINUX_NAME="acr-linux"
 export DISTRIBUTION_VERSION="2019.11"
-export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
+export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
 
 # BASE
 export KERNEL_BRANCH="5.x" 
