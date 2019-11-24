@@ -1,3 +1,7 @@
+# @author ARJUN C R (arjuncr00@gmail.com)
+#
+# web site https://www.acrlinux.com
+#
 #!/bin/bash
 
 set -e
