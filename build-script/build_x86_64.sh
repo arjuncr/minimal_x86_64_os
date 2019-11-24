@@ -3,9 +3,9 @@
 int_build_env()
 {
 export SCRIPT_NAME="LIGHT LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.1"
+export SCRIPT_VERSION="1.2"
 export LINUX_NAME="LIGHT LINUX"
-export DISTRIBUTION_VERSION="2019.8"
+export DISTRIBUTION_VERSION="2019.11"
 export ISO_FILENAME="light_linux-${SCRIPT_VERSION}.iso"
 
 # BASE
@@ -220,18 +220,18 @@ generate_image () {
     cp bios/com32/menu/menu.c32 ${ISODIR}
     cd ${ISODIR}
     rm isolinux.cfg && touch isolinux.cfg
-    echo 'default kernel.gz initrd=rootfs.gz vga=791' >> isolinux.cfg
+    echo 'default kernel.gz initrd=rootfs.gz' >> isolinux.cfg
     echo 'UI menu.c32 ' >> isolinux.cfg
     echo 'PROMPT 0 ' >> isolinux.cfg
     echo >> isolinux.cfg
-    echo 'MENU TITLE LIGHT LINUX 2019.4 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
+    echo 'MENU TITLE LIGHT LINUX 2019.11 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
     echo 'TIMEOUT 60 ' >> isolinux.cfg
     echo 'DEFAULT light linux ' >> isolinux.cfg
     echo >> isolinux.cfg
     echo 'LABEL light linux ' >> isolinux.cfg
     echo ' MENU LABEL START LIGHT LINUX [KERNEL:'${KERNEL_VERSION}']' >> isolinux.cfg
     echo ' KERNEL kernel.gz ' >> isolinux.cfg
-    echo ' APPEND initrd=rootfs.gz vga=791 ' >> isolinux.cfg
+    echo ' APPEND initrd=rootfs.gz' >> isolinux.cfg
     echo >> isolinux.cfg
     echo 'LABEL light_linux_vga ' >> isolinux.cfg
     echo ' MENU LABEL CHOOSE RESOLUTION ' >> isolinux.cfg
