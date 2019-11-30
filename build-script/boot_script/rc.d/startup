@@ -52,7 +52,8 @@ echo -n "Remounting root rw: "
 mount -o remount,rw /
 
 echo -n "Setting hostname: "
-echo "lightlinux">/etc/hostname
+echo "acrlinux">/etc/hostname
+hostname acrlinux
 
 echo -n "Cleaning up system: "
 > /var/run/utmp
@@ -68,7 +69,7 @@ echo -n "Setting up interface lo: "
 ifconfig lo up 127.0.0.1
 
 echo -n "setting eth0 ip"
-ifup eth0
+ifconfig lo up
 
 #echo "Running start scripts."
 
