@@ -9,7 +9,7 @@ l6:6:wait:/etc/rc6.d 6
 ::restart:/sbin/init                
 ::shutdown:/etc/init.d/shutdown     
 ::ctrlaltdel:/sbin/reboot           
-::once:cat /etc/motd                
+#::once:cat /etc/motd                
 ::askfirst:-/bin/login              
 tty2::respawn:/sbin/getty 38400 tty2
 tty3::respawn:/sbin/getty 38400 tty3
