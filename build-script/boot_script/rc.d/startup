@@ -69,7 +69,7 @@ echo -n "Setting up interface lo: "
 ifconfig lo up 127.0.0.1
 
 echo -n "setting eth0 ip"
-ifconfig lo up
+ifconfig eth0 up
 
 #echo "Running start scripts."
 
