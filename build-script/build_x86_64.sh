@@ -228,16 +228,16 @@ generate_image () {
     echo 'UI menu.c32 ' >> isolinux.cfg
     echo 'PROMPT 0 ' >> isolinux.cfg
     echo >> isolinux.cfg
-    echo 'MENU TITLE LIGHT LINUX 2019.11 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
+    echo 'MENU TITLE ACR LINUX 2019.11 /'${SCRIPT_VERSION}': ' >> isolinux.cfg
     echo 'TIMEOUT 60 ' >> isolinux.cfg
-    echo 'DEFAULT light linux ' >> isolinux.cfg
+    echo 'DEFAULT acr linux ' >> isolinux.cfg
     echo >> isolinux.cfg
-    echo 'LABEL light linux ' >> isolinux.cfg
-    echo ' MENU LABEL START LIGHT LINUX [KERNEL:'${KERNEL_VERSION}']' >> isolinux.cfg
+    echo 'LABEL acr linux ' >> isolinux.cfg
+    echo ' MENU LABEL START ACR LINUX [KERNEL:'${KERNEL_VERSION}']' >> isolinux.cfg
     echo ' KERNEL kernel.gz ' >> isolinux.cfg
     echo ' APPEND initrd=rootfs.gz' >> isolinux.cfg
     echo >> isolinux.cfg
-    echo 'LABEL light_linux_vga ' >> isolinux.cfg
+    echo 'LABEL acr_linux_vga ' >> isolinux.cfg
     echo ' MENU LABEL CHOOSE RESOLUTION ' >> isolinux.cfg
     echo ' KERNEL kernel.gz ' >> isolinux.cfg
     echo ' APPEND initrd=rootfs.gz vga=ask ' >> isolinux.cfg
