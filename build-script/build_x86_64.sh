@@ -6,6 +6,7 @@
 
 int_build_env()
 {
+export VERSION="1.2"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.2"
 export LINUX_NAME="acr-linux"
