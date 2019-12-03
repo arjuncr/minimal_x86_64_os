@@ -2,7 +2,7 @@ use build_x86_64.sh for building os (x86_64)
 
 For cloning the repo.
 
-git clone --recurse-submodules https://github.com/arjuncr/minimal_x86_64_os.git
+git clone --recurse-submodules https://github.com/acrlinux/minimal_x86_64_os.git   
 
 Update existing repo to latest.
 
