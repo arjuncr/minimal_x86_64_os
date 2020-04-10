@@ -6,11 +6,11 @@
 
 int_build_env()
 {
-export VERSION="1.2"
+export VERSION="1.3"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.2"
+export SCRIPT_VERSION="1.3"
 export LINUX_NAME="acr-linux"
-export DISTRIBUTION_VERSION="2019.11"
+export DISTRIBUTION_VERSION="2020.4"
 export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
 
 # BASE
@@ -91,8 +91,8 @@ build_kernel () {
     	make clean -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE
     elif [ "$1" == "-b" ]
     then	    
-    	 #cp $LIGHT_OS_KCONFIG .config
-    	 make defconfig CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
+    	 cp $LIGHT_OS_KCONFIG .config
+    	 make oldconfig CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
         	-j ${JFLAG}
         cp arch/$ARCH64/boot/bzImage ${ISODIR}/kernel.gz
     fi   
@@ -108,7 +108,8 @@ build_busybox () {
     	make -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE clean
     elif [ "$1" == "-b" ]
     then	    
-    	make -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE defconfig
+    	cp $LIGHT_OS_BUSYBOX_CONFIG .config
+    	make -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE oldconfig
     sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
     	make  ARCH=$arm CROSS_COMPILE=$CROSS_COMPIL busybox \
         	-j ${JFLAG}
