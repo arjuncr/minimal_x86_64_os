@@ -1,3 +1,6 @@
 [submodule "build-script/debian-target"]
 	path = build-script/debian-target
 	url = https://github.com/arjuncr/debian-target.git
+[submodule "minimal_x86_64_os"]
+	path = minimal_x86_64_os
+	url = https://github.com/arjuncr/minimal_x86_64_os.git
