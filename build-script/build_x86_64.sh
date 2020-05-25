@@ -15,7 +15,7 @@ export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
 
 # BASE
 export KERNEL_BRANCH="5.x" 
-export KERNEL_VERSION="5.3.11"
+export KERNEL_VERSION="5.6.14"
 export BUSYBOX_VERSION="1.30.1"
 export SYSLINUX_VERSION="6.03"
 
