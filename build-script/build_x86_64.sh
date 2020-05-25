@@ -6,11 +6,11 @@
 
 int_build_env()
 {
-export VERSION="1.3"
+export VERSION="1.4"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.3"
+export SCRIPT_VERSION="1.4"
 export LINUX_NAME="acr-linux"
-export DISTRIBUTION_VERSION="2020.4"
+export DISTRIBUTION_VERSION="2020.5"
 export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
 
 # BASE
