@@ -8,7 +8,13 @@ cd $BASEDIR
 
 cd ${SOURCEDIR}
 
-cd ncurses-${NCURSES_VERSION}
+    if [ ! -d ${WORKSPACE}/ncurses-${NCURSES_VERSION} ];
+    then
+	    echo "copying ncurses-${NCURSES_VERSION} ${WORKSPACE}"
+            cp -r ncurses-${NCURSES_VERSION} ${WORKSPACE}
+    fi
+
+cd ${WORKSPACE}/ncurses-${NCURSES_VERSION}
 
     if [ "$1" == "--clean" ] 
     then

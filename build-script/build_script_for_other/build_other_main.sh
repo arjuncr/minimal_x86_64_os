@@ -6,7 +6,7 @@
 
 set -e
 
-for script in $(ls | grep '^[0-9]*_.*.sh'); do
+for script in $(ls | grep '^[000-999]*_.*.sh'); do
   echo "Executing script '$script'."
   ./$script $1
 done

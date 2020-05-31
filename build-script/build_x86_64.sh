@@ -8,7 +8,7 @@ int_build_env()
 {
 export VERSION="1.4"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.4"
+export SCRIPT_VERSION="1.5"
 export LINUX_NAME="acr-linux"
 export DISTRIBUTION_VERSION="2020.5"
 export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
@@ -34,6 +34,7 @@ export BUILD_OTHER_DIR="build_script_for_other"
 export BOOT_SCRIPT_DIR="boot_script"
 export NET_SCRIPT="network"
 export CONFIG_ETC_DIR="${BASEDIR}/os-configs/etc"
+export WORKSPACE="${BASEDIR}/workspace"
 
 #cross compile
 export CROSS_COMPILE64=$BASEDIR/cross_gcc/x86_64-linux/bin/x86_64-linux-
@@ -79,12 +80,29 @@ prepare_dirs () {
     then
         mkdir    ${ISODIR}
     fi
+    if [ ! -d ${WORKSPACE} ];
+    then
+	mkdir ${WORKSPACE}
+    fi
 }
 
 build_kernel () {
     cd ${SOURCEDIR}
-			
-    cd linux-${KERNEL_VERSION}
+
+    if [ ! -d ${WORKSPACE}/linux-${KERNEL_VERSION} ];
+    then
+	    echo "copying kernel src to workspace"
+	    cp -r linux-${KERNEL_VERSION} ${WORKSPACE}
+	    echo "copying kernel patch to workspace"
+	    cp -r kernel-patch ${WORKSPACE}
+	    cd  ${WORKSPACE}/linux-${KERNEL_VERSION}
+	    for patch in $(ls ../kernel-patch | grep '^[000-999]*_.*.patch'); do
+		    echo "applying patch .... '$patch'."
+		    patch -p1 < ../kernel-patch/${patch}
+            done
+    fi
+
+    cd  ${WORKSPACE}/linux-${KERNEL_VERSION}
 	
     if [ "$1" == "-c" ]
     then		    
@@ -101,7 +119,19 @@ build_kernel () {
 build_busybox () {
     cd ${SOURCEDIR}
 
-    cd busybox-${BUSYBOX_VERSION}
+    if [ ! -d ${WORKSPACE}/busybox-${BUSYBOX_VERSION} ];
+    then
+            cp -r busybox-${BUSYBOX_VERSION} ${WORKSPACE}
+	    echo "copying busybox patch to workspace"
+            cp -r busybox-patch ${WORKSPACE}
+            cd  ${WORKSPACE}/busybox-${BUSYBOX_VERSION}
+            for patch in $(ls ../busybox-patch | grep '^[000-999]*_.*.patch'); do
+                echo "applying patch .... '$patch'."
+                patch -p1 < ../busybox-patch/${patch}
+            done
+    fi
+
+    cd ${WORKSPACE}/busybox-${BUSYBOX_VERSION}
 
     if [ "$1" == "-c" ]
     then	    
@@ -269,6 +299,7 @@ clean_files () {
    rm -rf ${SOURCEDIR}
    rm -rf ${ROOTFSDIR}
    rm -rf ${ISODIR}
+   rm -rf ${WORKSPACE}
 }
 
 init_work_dir()
