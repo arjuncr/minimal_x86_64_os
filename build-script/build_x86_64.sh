@@ -243,12 +243,7 @@ generate_rootfs () {
 
 
 generate_image () {
-    if [ ! -d ${SOURCEDIR}/syslinux-${SYSLINUX_VERSION} ];
-    then
-        cd ${SOURCEDIR}
-        wget -O syslinux.tar.xz http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-${SYSLINUX_VERSION}.tar.xz
-        tar -xvf syslinux.tar.xz && rm syslinux.tar.xz
-    fi
+
     cd ${SOURCEDIR}/syslinux-${SYSLINUX_VERSION}
     cp bios/core/isolinux.bin ${ISODIR}/
     cp bios/com32/elflink/ldlinux/ldlinux.c32 ${ISODIR}
