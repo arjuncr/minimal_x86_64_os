@@ -42,6 +42,19 @@ export ARCH64="x86_64"
 export CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
 export ARCHi386="i386"
 
+if [ "$3" == "64" ]
+then
+export ARCH = $ARCH64
+export CROSS_COMPILE = $CROSS_COMPILE64
+elif [ "$3" == "32" ]
+then
+export ARCH = $ARCHi386
+export CROSS_COMPILE = $CROSS_COMPILEi386
+else
+export ARCH = $ARCH64
+export CROSS_COMPILE = $CROSS_COMPILE64
+fi
+
 #Dir and mode
 export ETCDIR="etc"
 export MODE="754"
@@ -110,9 +123,9 @@ build_kernel () {
     elif [ "$1" == "-b" ]
     then	    
     	 cp $LIGHT_OS_KCONFIG .config
-    	 make oldconfig CROSS_COMPILE=$CROSS_COMPILE64 ARCH=$ARCH64 bzImage \
+    	 make oldconfig CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH bzImage \
         	-j ${JFLAG}
-        cp arch/$ARCH64/boot/bzImage ${ISODIR}/kernel.gz
+        cp arch/$ARCH/boot/bzImage ${ISODIR}/kernel.gz
     fi   
 }
 
@@ -141,7 +154,7 @@ build_busybox () {
     	cp $LIGHT_OS_BUSYBOX_CONFIG .config
     	make -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE oldconfig
     sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
-    	make  ARCH=$arm CROSS_COMPILE=$CROSS_COMPIL busybox \
+    	make  ARCH=$arm CROSS_COMPILE=$CROSS_COMPILE busybox \
         	-j ${JFLAG}
 
     	make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE install \
