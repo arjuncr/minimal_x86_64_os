@@ -347,6 +347,13 @@ wipe_rebuild()
 	rebuild_all
 }
 
+build_img ()
+{
+	build_all
+	generate_rootfs
+	generate_image
+}
+
 help_msg()
 {
 echo -e "###################################################################################################\n"
@@ -356,6 +363,8 @@ echo -e "############################Utility-${SCRIPT_VERSION} to Build x86_64 O
 echo -e "###################################################################################################\n"
 
 echo -e "Help message --help\n"
+
+echo -e "build and create iso: --build-img\n"
 
 echo -e "Build All: --build-all\n"
 
@@ -478,6 +487,11 @@ fi
 if [ "$1" == "--Run-qemu" ]
 then
 test_qemu
+fi
+
+if [ "$1" == "--build-img" ]
+then
+build_img
 fi
 
 }
