@@ -20,6 +20,8 @@ Buiding os from source: (./build_x86_64.sh)
 
 Help message --help
 
+Build and create iso: --build-img
+
 Build All: --build-all
 
 Rebuild All: --rebuild-all
@@ -44,3 +46,11 @@ Test with Qemu --Run-qemu
 
 ######################################################################################################
 ```
+
+Build 64 bit:  
+
+./build_x86_64.sh --build-img 4 64  
+
+Build 32 bit:
+
+./build_x86_64.sh --build-img 4 32    
