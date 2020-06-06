@@ -11,7 +11,6 @@ export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.5"
 export LINUX_NAME="acr-linux"
 export DISTRIBUTION_VERSION="2020.5"
-export ISO_FILENAME="minimal-acrlinux_x86_64-${SCRIPT_VERSION}.iso"
 
 # BASE
 export KERNEL_BRANCH="5.x" 
@@ -54,6 +53,8 @@ else
 export ARCH = $ARCH64
 export CROSS_COMPILE = $CROSS_COMPILE64
 fi
+
+export ISO_FILENAME="minimal-acrlinux-${ARCH}-${SCRIPT_VERSION}.iso"
 
 #Dir and mode
 export ETCDIR="etc"
