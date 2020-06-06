@@ -364,7 +364,7 @@ echo -e "#######################################################################
 
 echo -e "Help message --help\n"
 
-echo -e "build and create iso: --build-img\n"
+echo -e "Build and create iso: --build-img\n"
 
 echo -e "Build All: --build-all\n"
 
