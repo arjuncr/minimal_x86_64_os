@@ -43,15 +43,15 @@ ARCHi386="i386"
 
 if [ "$3" == "64" ]
 then
-export ARCH = $ARCH64
-export CROSS_COMPILE = $CROSS_COMPILE64
+export ARCH=$ARCH64
+export CROSS_COMPILE=$CROSS_COMPILE64
 elif [ "$3" == "32" ]
 then
-export ARCH = $ARCHi386
-export CROSS_COMPILE = $CROSS_COMPILEi386
+export ARCH=$ARCHi386
+export CROSS_COMPILE=$CROSS_COMPILEi386
 else
-export ARCH = $ARCH64
-export CROSS_COMPILE = $CROSS_COMPILE64
+export ARCH=$ARCH64
+export CROSS_COMPILE=$CROSS_COMPILE64
 fi
 
 export ISO_FILENAME="minimal-acrlinux-${ARCH}-${SCRIPT_VERSION}.iso"
