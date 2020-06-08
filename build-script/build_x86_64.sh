@@ -301,9 +301,9 @@ generate_image () {
 
 test_qemu () {
   cd ${BASEDIR}
-    if [ -f ${ISO_FILENAME} ];
+    if [ -f ${BASEDIR}/image/${ISO_FILENAME} ];
     then
-       qemu-system-x86_64 -m 128M -cdrom ${ISO_FILENAME} -boot d -vga std
+       qemu-system-x86_64 -m 128M -cdrom ${BASEDIR}/image/${ISO_FILENAME} -boot d -vga std
     fi
 }
 
