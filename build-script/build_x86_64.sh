@@ -37,21 +37,26 @@ export WORKSPACE="${BASEDIR}/workspace"
 
 #cross compile
 export CROSS_COMPILE64=$BASEDIR/cross_gcc/x86_64-linux/bin/x86_64-linux-
-export ARCH64="x86_64"
+ARCH64="x86_64"
+export ARCH64
 export CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
-export ARCHi386="i386"
+ARCHi386="i386"
+export ARCHi386
 
 if [ "$3" == "64" ]
 then
 export ARCH = $ARCH64
-export CROSS_COMPILE = $CROSS_COMPILE64
+CROSS_COMPILE = $CROSS_COMPILE64
+export CROSS_COMPILE
 elif [ "$3" == "32" ]
 then
 export ARCH = $ARCHi386
-export CROSS_COMPILE = $CROSS_COMPILEi386
+CROSS_COMPILE = $CROSS_COMPILEi386
+export CROSS_COMPILE
 else
 export ARCH = $ARCH64
-export CROSS_COMPILE = $CROSS_COMPILE64
+CROSS_COMPILE = $CROSS_COMPILE64
+export CROSS_COMPILE
 fi
 
 export ISO_FILENAME="minimal-acrlinux-${ARCH}-${SCRIPT_VERSION}.iso"
