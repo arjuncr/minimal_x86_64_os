@@ -8,7 +8,7 @@ int_build_env()
 {
 export VERSION="1.5"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
-export SCRIPT_VERSION="1.5"
+export SCRIPT_VERSION="1.6"
 export LINUX_NAME="acr-linux"
 export DISTRIBUTION_VERSION="2020.5"
 
@@ -54,7 +54,7 @@ export ARCH=$ARCH64
 export CROSS_COMPILE=$CROSS_COMPILE64
 fi
 
-export ISO_FILENAME="minimal-acrlinux-${ARCH}-${SCRIPT_VERSION}.iso"
+export ISO_FILENAME="minimal-acrlinux-${ARCH}-${VERSION}.iso"
 
 #Dir and mode
 export ETCDIR="etc"
@@ -362,7 +362,7 @@ help_msg()
 {
 echo -e "###################################################################################################\n"
 
-echo -e "############################Utility-${SCRIPT_VERSION} to Build x86_64 OS###########################\n"
+echo -e "#####################################Utility-${SCRIPT_VERSION} to Build x86_64 OS####################################\n"
 
 echo -e "###################################################################################################\n"
 
