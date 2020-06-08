@@ -283,11 +283,14 @@ generate_image () {
     echo ' KERNEL kernel.gz ' >> isolinux.cfg
     echo ' APPEND initrd=rootfs.gz vga=ask ' >> isolinux.cfg
 
-    rm ${BASEDIR}/${ISO_FILENAME}
+    if [ -f ${BASEDIR}/output/${ISO_FILENAME} ]
+    then
+    rm ${BASEDIR}/output/${ISO_FILENAME}
+    fi
 
     xorriso \
         -as mkisofs \
-        -o ${BASEDIR}/${ISO_FILENAME} \
+        -o ${BASEDIR}/image/${ISO_FILENAME} \
         -b isolinux.bin \
         -c boot.cat \
         -no-emul-boot \
