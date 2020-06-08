@@ -14,7 +14,7 @@ jobs:
       run: |
         git clone --recurse-submodules https://github.com/arjuncr/minimal_x86_64_os.git
         cd minimal_x86_64_os/build-script
-        ./build_x86_64.sh --build-img 8 64
+        ./build_x86_64.sh --build-img 12 64
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
