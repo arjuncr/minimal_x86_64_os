@@ -126,7 +126,7 @@ build_kernel () {
     	 cp $LIGHT_OS_KCONFIG .config
     	 make oldconfig CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH bzImage \
         	-j ${JFLAG}
-        cp arch/$ARCH/boot/bzImage ${ISODIR}/kernel.gz
+        cp arch/x86/boot/bzImage ${ISODIR}/kernel.gz
     fi   
 }
 
