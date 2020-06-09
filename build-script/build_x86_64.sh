@@ -4,8 +4,9 @@
 #
 #!/bin/bash
 
-int_build_env()
+init_build_env()
 {
+echo "init build env...."
 export VERSION="1.5"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.6"
@@ -41,11 +42,11 @@ ARCH64="x86_64"
 CROSS_COMPILEi386=$BASEDIR/cross_gcc/i386-linux/bin/i386-linux-
 ARCHi386="i386"
 
-if [ "$3" == "64" ]
+if [ "$2" == "64" ]
 then
 export ARCH=$ARCH64
 export CROSS_COMPILE=$CROSS_COMPILE64
-elif [ "$3" == "32" ]
+elif [ "$2" == "32" ]
 then
 export ARCH=$ARCHi386
 export CROSS_COMPILE=$CROSS_COMPILEi386
@@ -71,11 +72,11 @@ export CFLAGS=-m64
 export CXXFLAGS=-m64
 
 #setting JFLAG
-if [ -z "$2"  ]
+if [ -z "$1"  ]
 then	
 	export JFLAG=4
 else
-	export JFLAG=$2
+	export JFLAG=$1
 fi
 
 }
@@ -181,6 +182,7 @@ build_extras () {
 }
 
 generate_rootfs () {	
+   echo "generating rootfs..."
     cd ${ROOTFSDIR}
     rm -f linuxrc
 
@@ -257,14 +259,19 @@ generate_rootfs () {
 
 
 generate_image () {
-
+    echo "generateting iso image..."
+    
     cd ${SOURCEDIR}/syslinux-${SYSLINUX_VERSION}
+    
     cp bios/core/isolinux.bin ${ISODIR}/
     cp bios/com32/elflink/ldlinux/ldlinux.c32 ${ISODIR}
     cp bios/com32/libutil/libutil.c32 ${ISODIR}
     cp bios/com32/menu/menu.c32 ${ISODIR}
+    
     cd ${ISODIR}
+    
     rm isolinux.cfg && touch isolinux.cfg
+    
     echo 'default kernel.gz initrd=rootfs.gz' >> isolinux.cfg
     echo 'UI menu.c32 ' >> isolinux.cfg
     echo 'PROMPT 0 ' >> isolinux.cfg
@@ -502,10 +509,10 @@ fi
 
 main()
 {
-int_build_env
+init_build_env $2 $3
 init_work_dir
 option $1
 }
 
 #starting of script
-main $1 
+main $1 $2 $3 
