@@ -10,7 +10,7 @@ echo "init build env...."
 export VERSION="1.5"
 export SCRIPT_NAME="ACR LINUX BUILD SCRIPT"
 export SCRIPT_VERSION="1.6"
-export LINUX_NAME="acr-linux"
+export LINUX_NAME="acrlinux"
 export DISTRIBUTION_VERSION="2020.5"
 
 # BASE
@@ -18,11 +18,6 @@ export KERNEL_BRANCH="5.x"
 export KERNEL_VERSION="5.6.14"
 export BUSYBOX_VERSION="1.30.1"
 export SYSLINUX_VERSION="6.03"
-
-# EXTRAS
-export NCURSES_VERSION="6.1"
-export NANO_VERSION="4.0"
-export VIM_DIR="81"
 
 export BASEDIR=`realpath --no-symlinks $PWD`
 export SOURCEDIR=${BASEDIR}/light-os
@@ -55,7 +50,7 @@ export ARCH=$ARCH64
 export CROSS_COMPILE=$CROSS_COMPILE64
 fi
 
-export ISO_FILENAME="minimal-acrlinux-${ARCH}-${VERSION}.iso"
+export ISO_FILENAME="acrlinux-${ARCH}-${VERSION}.iso"
 
 #Dir and mode
 export ETCDIR="etc"
@@ -125,6 +120,7 @@ build_kernel () {
     elif [ "$1" == "-b" ]
     then	    
     	 cp $LIGHT_OS_KCONFIG .config
+	 echo "building $ARCH acrlinux kernel"
     	 make oldconfig CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH bzImage \
         	-j ${JFLAG}
         cp arch/x86/boot/bzImage ${ISODIR}/kernel.gz
@@ -154,8 +150,9 @@ build_busybox () {
     elif [ "$1" == "-b" ]
     then	    
     	cp $LIGHT_OS_BUSYBOX_CONFIG .config
+	echo "building $ARCH acrlinux busybox"
     	make -j$JFLAG ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE oldconfig
-    sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
+    	sed -i 's|.*CONFIG_STATIC.*|CONFIG_STATIC=y|' .config
     	make  ARCH=$arm CROSS_COMPILE=$CROSS_COMPILE busybox \
         	-j ${JFLAG}
 
@@ -163,7 +160,7 @@ build_busybox () {
         	-j ${JFLAG}
 
     	rm -rf ${ROOTFSDIR} && mkdir ${ROOTFSDIR}
-    cd _install
+    	cd _install
     	cp -R . ${ROOTFSDIR}
     	rm  ${ROOTFSDIR}/linuxrc
     fi
