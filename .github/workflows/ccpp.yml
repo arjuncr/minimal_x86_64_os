@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Installing build dep
       run: sudo apt install bison flex libelf-dev
-    - name: Running script to build minimal x86_64 64 bit os
+    - name: Running script to build minimal 64 bit os
       run: |
         git clone --recurse-submodules https://github.com/arjuncr/minimal_x86_64_os.git
         cd minimal_x86_64_os/build-script
@@ -27,14 +27,14 @@ jobs:
       with:
         # Destination path
         path:  /home/runner/work/minimal_x86_64_os/minimal_x86_64_os/minimal_x86_64_os/build-script/output/  
-  build_31:
+  build_32:
 
     runs-on: ubuntu-latest
 
     steps:
     - name: Installing build dep
       run: sudo apt install bison flex libelf-dev
-    - name: Running script to build minimal x86_64 32 bit os
+    - name: Running script to build minimal 32 bit os
       run: |
         git clone --recurse-submodules https://github.com/arjuncr/minimal_x86_64_os.git
         cd minimal_x86_64_os/build-script
