@@ -4,6 +4,8 @@
 #
 #!/bin/bash
 
+export NCURSES_VERSION="6.1"
+
 cd $BASEDIR
 
 cd ${SOURCEDIR}
