@@ -15,6 +15,7 @@ Prerequisite
 apt install build-essential
 apt install bison flex libelf-dev xorriso
 apt install qemu qemu-system
+apt-get install libssl-dev  
 ```
 
 
