@@ -17,7 +17,9 @@ apt install bison flex libelf-dev xorriso
 apt install qemu qemu-system
 apt-get install libssl-dev  
 ```
+os  
 
+ubuntu 18.04  
 
 Buiding os from source: (./build_x86_64.sh)
 ```
