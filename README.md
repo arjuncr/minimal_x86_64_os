@@ -10,6 +10,14 @@ git pull
 
 git submodule update
 
+Prerequisite      
+```
+apt install build-essential
+apt install bison flex libelf-dev xorriso
+apt install qemu qemu-system
+```
+
+
 Buiding os from source: (./build_x86_64.sh)
 ```
 ###################################################################################################
